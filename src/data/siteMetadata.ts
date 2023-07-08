@@ -7,9 +7,9 @@ const siteMetadata = {
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
   siteRepo: 'https://github.com/yalalt/medium-blog',
-  siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar.png',
-  socialBanner: '/static/images/twitter-card.png',
+  siteLogo: '/images/logo.png',
+  image: '/images/avatar.png',
+  socialBanner: '/images/twitter-card.png',
   email: 'yalaltgandush@gmail.com',
   github: 'https://github.com',
   twitter: 'https://twitter.com/Twitter',
