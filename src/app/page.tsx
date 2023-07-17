@@ -1,5 +1,5 @@
 import Post from '@/components/blog/Post';
-import { Post as TPost } from '@/types/post';
+import { Post as TPost } from '@/types';
 
 export default async function Page() {
   const res = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -13,7 +13,7 @@ export default async function Page() {
           Latest
         </h1>
         <p className='text-lg leading-7 text-gray-500 dark:text-gray-400'>
-          A blog created with Next.js and Tailwind.css
+          Blog of home page and created with nextjs and Tailwind 
         </p>
       </div>
       <ul className='divide-y divide-gray-200 dark:divide-gray-700'>

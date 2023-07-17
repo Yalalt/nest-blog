@@ -1,15 +1,12 @@
 import { FunctionComponent } from 'react';
-import { Post as TPost } from '@/types/post';
+import { Post as TPost } from '@/types';
 import { notFound } from 'next/navigation';
-
 
 interface PageProps {
   params: {
     id: string;
   };
 }
-
-
 
 // generateStaticParams baihgvi ved dynamic page render hiih ved true baih
 // dynamicParams default value true
@@ -36,13 +33,13 @@ export async function generateStaticParams() {
 const Page: FunctionComponent<PageProps> = async ({ params: { id } }) => {
   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
 
-    if (res.status === 404) {
-        notFound();
-    }
+  if (res.status === 404) {
+    notFound();
+  }
 
-    if (res.status !== 200) {
-        throw new Error('Алдаа гарлаа');
-    }
+  if (res.status !== 200) {
+    throw new Error('Алдаа гарлаа: on page ssg');
+  }
 
   const post: TPost = await res.json();
 
