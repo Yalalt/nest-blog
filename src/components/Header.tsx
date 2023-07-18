@@ -24,8 +24,8 @@ export default async function Header() {
       <div className='flex items-center text-base leading-5'>
         <div className='hidden sm:block'>
           <ul className='flex items-center'>
-            {headerNavLinks.map((link) => (
-              <li className='p-4' key={link.title}>
+            {headerNavLinks.map((link, index) => (
+              <li className='p-4' key={index}>
                 <Link key={link.title} href={link.href} className='font-medium text-gray-900 dark:text-gray-100'>
                   {link.title}
                 </Link>

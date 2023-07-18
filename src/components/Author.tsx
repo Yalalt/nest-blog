@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
-import { User as TUser, Post as TPost } from '@/types/index';
+import { Post as TPost } from '@prisma/client';
+import { User as TUser } from '@/types/index';
 import Post from '@/components/blog/Post';
 import { notFound } from 'next/navigation';
 
@@ -15,7 +16,7 @@ const Author: FunctionComponent<AuthorProps> = async ({ authorId }) => {
   }
 
   if (userRes.status !== 200) {
-    throw new Error('Хэрэглэгчийн мэдээлэл унших үед алдаа гарлаа');
+    throw new Error('Хэрэглэгчийн мэдээллийг унших үед алдаа гарлаа');
   }
 
   const user: TUser = await userRes.json();

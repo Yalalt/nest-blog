@@ -1,10 +1,13 @@
 import Post from '@/components/blog/Post';
-import { Post as TPost } from '@/types';
+import { getPosts } from '@/lib/prisma/posts';
+import { Post as TPost } from '@prisma/client';
 
 export default async function Page() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const { posts = [], error }: { posts?: TPost[]; error?: any } = await getPosts({});
 
-  const posts: TPost[] = await res.json();
+  if (error) {
+    throw error;
+  }
 
   return (
     <div className='divide-y divide-gray-200 dark:divide-gray-700'>
@@ -13,7 +16,7 @@ export default async function Page() {
           Latest
         </h1>
         <p className='text-lg leading-7 text-gray-500 dark:text-gray-400'>
-          Blog of home page and created with nextjs and Tailwind 
+          A blog created with Next.js and Tailwind.css
         </p>
       </div>
       <ul className='divide-y divide-gray-200 dark:divide-gray-700'>

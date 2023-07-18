@@ -1,12 +1,10 @@
-import Form from "@/components/blog/Form";
-import { FunctionComponent } from "react";
+import Form from '@/components/blog/Form';
+import { FunctionComponent } from 'react';
 
-interface CreateProps {
-    
-}
- 
+interface CreateProps {}
+
 const Create: FunctionComponent<CreateProps> = () => {
-    return <Form />;
-}
- 
+  return <Form />;
+};
+
 export default Create;

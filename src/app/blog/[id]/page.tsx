@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Post as TPost } from '@/types';
+import { Post as TPost } from '@prisma/client';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
@@ -8,11 +8,6 @@ interface PageProps {
   };
 }
 
-// generateStaticParams baihgvi ved dynamic page render hiih ved true baih
-// dynamicParams default value true
-// export const dynamicParams = false;
-
-// Post of details info's title to set either on the page title and description
 export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
   const blog = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then((res) => res.json());
 
@@ -23,7 +18,7 @@ export async function generateMetadata({ params: { id } }: { params: { id: strin
 }
 
 export async function generateStaticParams() {
-  const posts = await fetch(`https://jsonplaceholder.typicode.com/posts/`).then((res) => res.json());
+  const posts = await fetch('https://jsonplaceholder.typicode.com/posts').then((res) => res.json());
 
   return posts.map((post: any) => ({
     id: post.id.toString(),
@@ -38,7 +33,7 @@ const Page: FunctionComponent<PageProps> = async ({ params: { id } }) => {
   }
 
   if (res.status !== 200) {
-    throw new Error('Алдаа гарлаа: on page ssg');
+    throw new Error('Алдаа гарлаа');
   }
 
   const post: TPost = await res.json();

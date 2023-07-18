@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 
-const GoogleSignInButton = () => {
+const DiscordSignInButton = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
@@ -15,4 +15,4 @@ const GoogleSignInButton = () => {
   );
 };
 
-export default GoogleSignInButton;
+export default DiscordSignInButton;
