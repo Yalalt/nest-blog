@@ -11,6 +11,7 @@ interface AuthorProps {
 const Author: FunctionComponent<AuthorProps> = async ({ authorId }) => {
   const userRes = await fetch(`https://jsonplaceholder.typicode.com/users/${authorId}`);
 
+
   if (userRes.status === 404) {
     notFound();
   }
@@ -38,7 +39,7 @@ const Author: FunctionComponent<AuthorProps> = async ({ authorId }) => {
       <ul className='divide-y divide-gray-200 dark:divide-gray-700'>
         {!posts.length && 'No posts found.'}
         {posts.map((post) => (
-          <Post key={post.id} post={post} />
+          <Post isEditable={true} key={post.id} post={post} />
         ))}
       </ul>
     </div>
