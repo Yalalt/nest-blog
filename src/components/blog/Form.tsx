@@ -17,7 +17,7 @@ const formSchema = z.object({
     .string({
       required_error: 'Гарчиг оруулна уу',
     })
-    .max(50),
+    .max(50, 'Гарчиг 50 тэмдэгтээс бага байх хэрэгтэй'),
   body: z.string({
     required_error: 'Агуулга оруулна уу',
   }),
