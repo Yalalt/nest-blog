@@ -8,10 +8,18 @@ datasource db {
 }
 
 model Post {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  body   String
-  title  String
-  userId Int
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  description String?
+  body        String
+  title       String
+  userId      String  @db.ObjectId
+
+  createdAt   DateTime  @default(now())
+  publishedAt DateTime?
+
+  coverImage String?
+
+  published Boolean @default(false)
 
   @@map("posts")
 }

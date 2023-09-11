@@ -1,7 +1,6 @@
 'use server';
 
-// business logic
-import { createPost, deletePost, updatePost } from '@/lib/prisma/posts';
+import { createPost, updatePost, deletePost } from '@/lib/prisma/posts';
 import { Prisma } from '@prisma/client';
 
 export const addPost = async (post: Prisma.PostCreateInput) => {

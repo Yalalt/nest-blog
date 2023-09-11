@@ -7,20 +7,22 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '../ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 import { Post } from '@prisma/client';
-import { addPost, editPost, removePost } from '@/app/actions/posts';
 import { useRouter } from 'next/navigation';
+import Editor from '../common/Editor';
+import { Label } from '../ui/label';
+import Image from 'next/image';
 
 const formSchema = z.object({
   title: z
     .string({
       required_error: 'Гарчиг оруулна уу',
     })
-    .max(50, 'Гарчиг 50 тэмдэгтээс бага байх хэрэгтэй'),
-  body: z.string({
-    required_error: 'Агуулга оруулна уу',
-  }),
+    .max(50),
+  description: z.string(),
+  published: z.boolean(),
 });
 
 interface BlogFormProps {
@@ -29,34 +31,45 @@ interface BlogFormProps {
 
 const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
   const router = useRouter();
+
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [body, setBody] = useState(post?.body || '');
+  const [coverImage, setCoverImage] = useState(post?.coverImage || '');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: post?.title,
-      body: post?.body,
+      description: post?.description || '',
+      published: post?.published || false,
     },
   });
 
   useEffect(() => {
     if (!infoMessage) return;
 
-    const timeOut = setTimeout(() => {
+    const timeout = setTimeout(() => {
       setInfoMessage(null);
     }, 2000);
 
     return () => {
-      clearTimeout(timeOut);
+      clearTimeout(timeout);
     };
   }, [infoMessage]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    const finalValues = {
+      ...values,
+      publishedAt: values.published ? new Date() : null,
+      body,
+      coverImage,
+    };
+
     if (post) {
-      // edit the post
-      editPost(post.id, values)
+      // Update
+      fetch(`/api/user/post/${post.id}`, { method: 'PUT', body: JSON.stringify(finalValues) })
         .then(() => {
           setInfoMessage('Амжилттай хадгаллаа');
         })
@@ -64,11 +77,12 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
           setInfoMessage(error.message);
         });
     } else {
-      // create a new post
-      addPost({
-        ...values,
-        userId: 1,
+      // Create
+      fetch('/api/user/post', {
+        method: 'POST',
+        body: JSON.stringify(finalValues),
       })
+        .then((res) => res.json())
         .then(({ post, error }) => {
           setInfoMessage('Амжилттай хадгаллаа');
 
@@ -76,7 +90,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
             throw new Error(error.message);
           }
 
-          router.push(`/post/edit/${post?.id}`);
+          router.push(`/user/post/edit/${post?.id}`);
         })
         .catch((error) => {
           setInfoMessage(error.message);
@@ -84,15 +98,32 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
     }
   }
 
-  function onDeletePost() {
+  function onDelete() {
     if (post) {
-      if (confirm('Та пост устгах гэж байна!')) {
-        removePost(post.id)
-          .then(() => router.push('/profile'))
+      if (confirm('Та устгахыг хүсч байна уу?'))
+        fetch(`/api/user/post/${post.id}`, { method: 'DELETE' })
+          .then(() => router.push('/user/profile'))
           .catch((error) => setInfoMessage(error.message));
-      }
     }
   }
+
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const formDate = new FormData();
+    formDate.append('file', file);
+
+    fetch('/api/upload', {
+      method: 'POST',
+      body: formDate,
+    }).then((res) => {
+      res.json().then(({ url }) => {
+        setCoverImage(url);
+      });
+    });
+  };
 
   return (
     <>
@@ -116,21 +147,42 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
               </FormItem>
             )}
           />
+          <div className='grid w-full max-w-sm items-center gap-1.5'>
+            <Label htmlFor='picture'>Зураг</Label>
+            <Input id='picture' type='file' onChange={onChangeFile} />
+            {coverImage && <Image src={coverImage} alt={'Cover image'} width={200} height={200} />}
+          </div>
+
           <FormField
             control={form.control}
-            name='body'
+            name='description'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Агуулга</FormLabel>
+                <FormLabel>Хураангуй</FormLabel>
                 <FormControl>
-                  <Textarea className='h-96' {...field} />
+                  <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name='published'
+            render={({ field }) => (
+              <FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4'>
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+                <div className='space-y-1 leading-none'>
+                  <FormLabel>Нийтлэх эсэх</FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+          <Editor body={body} setBody={setBody} />
           <div>
-            <Button onClick={onDeletePost} className='float-left' type='button' variant={'destructive'}>
+            <Button onClick={onDelete} className='float-left' type='button' variant={'destructive'}>
               Устгах
             </Button>
             <Button className='float-right' type='submit'>
