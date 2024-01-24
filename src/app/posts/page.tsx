@@ -13,6 +13,16 @@ interface PageProps {
 
 const POSTS_PER_PAGE = 3;
 
+/**
+ * Page component to display paginated list of posts.
+ *
+ * Fetches posts from DB based on page number and search value.
+ * Renders Post components for each post.
+ * Shows pagination based on total pages calculated from posts count.
+ *
+ * Props:
+ * - searchParams: Object with page and searchValue query params.
+ */
 const Page: FunctionComponent<PageProps> = async ({ searchParams }) => {
   const page = parseInt(searchParams.page || '1');
   const skip = page * POSTS_PER_PAGE - POSTS_PER_PAGE;
