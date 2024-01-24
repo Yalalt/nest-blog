@@ -5,7 +5,7 @@ const siteMetadata = {
   description: 'A blog is Nestacademy students blogs',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://medium-like-ten.vercel.app/',
+  siteUrl: 'https://nest-blog-ninja.vercel.app/',
   siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
   siteLogo: '/static/images/logo-nest.png',
   image: '/static/images/avatar.png',
