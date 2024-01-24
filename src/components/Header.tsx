@@ -11,7 +11,7 @@ export default async function Header() {
         <Link href='/' aria-label={siteMetadata.headerTitle}>
           <div className='flex items-center justify-between'>
             <div className='mr-3'>
-              <Image width={53} height={43} priority src='/images/logo.svg' alt='Follow us on Twitter' />
+              <Image width={53} height={43} priority src='/images/logo-nest.svg' alt='Follow us on Twitter' />
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
               <div className='hidden h-6 text-2xl font-semibold sm:block'>{siteMetadata.headerTitle}</div>

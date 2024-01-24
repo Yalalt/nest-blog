@@ -10,14 +10,15 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 
   return (
     <div>
-      <h2>Something went wrong!</h2>
+      <h2 className='text-red-400 mb-4'>Алдаа гарлаа!</h2>
       <button
+        className='border border-red-400 rounded-md p-2 text-red-400 hover:bg-red-400 hover:text-white'
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
-        Try again
+        Дахин ачааллах
       </button>
     </div>
   );

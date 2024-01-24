@@ -30,6 +30,8 @@ export async function generateStaticParams() {
 const Page: FunctionComponent<PageProps> = async ({ params: { id } }) => {
   const { post, error } = await getPostById(id);
 
+  console.log("Error check: ", error);
+  
   if (error) {
     throw new Error(error.message);
   }

@@ -10,7 +10,7 @@ interface ItemProps {
   isEditable?: boolean;
 }
 
-const Item: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
+const Post: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
   const { id, title, description, publishedAt, coverImage } = post;
 
   const formattedDate = dayjs(publishedAt).format('YYYY-MM-DD HH:mm:ss');
@@ -62,4 +62,4 @@ const Item: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
   );
 };
 
-export default Item;
+export default Post;
