@@ -24,7 +24,7 @@ const Author: FunctionComponent<AuthorProps> = async ({ user, isEditable }) => {
         <p className='text-lg leading-7 text-gray-500 dark:text-gray-400'>{user?.email}</p>
       </div>
       <ul className='divide-y divide-gray-200 dark:divide-gray-700'>
-        {!posts.length && 'No posts found.'}
+        {!posts.length && 'Пост олдсонгүй'}
         {posts.map((post) => (
           <Post isEditable={isEditable} key={post.id} post={post} />
         ))}
