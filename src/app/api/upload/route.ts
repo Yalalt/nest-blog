@@ -1,5 +1,3 @@
-// working fine
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
@@ -40,6 +38,19 @@ export async function POST(request: NextRequest) {
 
     const Key = `${file.name}-${Date.now().toString()}`;
 
+    /**
+     * Defines the parameters for the S3 PutObject command to upload
+     * the file to S3.
+     * - Bucket: The S3 bucket name
+     * - Key: The unique S3 object key
+     * - Body: The file content as a Buffer
+     * - ContentType: The file MIME type
+     * - ACL: Set the object ACL to public-read
+     */
+    /**
+     * ACL sets the access control list permissions for the uploaded object.
+     * This is set to public-read to allow anyone to view the file.
+     */
     const putParams = {
       Bucket: BUCKET_NAME,
       Key,
