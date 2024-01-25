@@ -9,7 +9,7 @@ const Comment: FunctionComponent<CommentProps> = () => {
   return (
     <Giscus
       id='comments'
-      repo='Yalalt/medium-like'
+      repo='Yalalt/nest-blog'
       repoId='R_kgDOJ23-qA'
       category='Announcements'
       categoryId='DIC_kwDOJ23-qM4CZOCN'
