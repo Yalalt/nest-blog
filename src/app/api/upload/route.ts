@@ -21,6 +21,10 @@ export async function POST(request: NextRequest) {
     // Get file from formData
     const file = formData.get('file') as File | null;
 
+    if (!(file instanceof File)) {
+      throw new Error('Invalid file format');
+    }
+
     if (!file) {
       throw new Error('File not found');
     }
@@ -47,16 +51,12 @@ export async function POST(request: NextRequest) {
      * - ContentType: The file MIME type
      * - ACL: Set the object ACL to public-read
      */
-    /**
-     * ACL sets the access control list permissions for the uploaded object.
-     * This is set to public-read to allow anyone to view the file.
-     */
     const putParams = {
       Bucket: BUCKET_NAME,
-      Key,
+      Key: Key,
       Body: Buffer.concat(chunks),
       ContentType: file.type,
-      ACL: 'public-read',
+      ACL: 'public-read' as const,
     };
 
     const data = await s3.send(new PutObjectCommand(putParams));
@@ -69,8 +69,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });
     }
   } catch (error: any) {
-    console.log(error);
-
     return new Response(JSON.stringify({ message: error.message }), { status: 500 });
   }
 }

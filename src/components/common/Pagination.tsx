@@ -14,12 +14,12 @@ export default function Pagination({ totalPages, currentPage }: Props) {
       <nav className='flex justify-between'>
         {!prevPage && (
           <button rel='previous' className='cursor-auto disabled:opacity-50' disabled={!prevPage}>
-            Previous
+            Өмнөх
           </button>
         )}
         {prevPage && (
           <Link href={currentPage - 1 === 1 ? `/posts/` : `/posts?page=${currentPage - 1}`}>
-            <button rel='previous'>Previous</button>
+            <button rel='previous'>Өмнөх</button>
           </Link>
         )}
         <span>
@@ -27,12 +27,12 @@ export default function Pagination({ totalPages, currentPage }: Props) {
         </span>
         {!nextPage && (
           <button rel='next' className='cursor-auto disabled:opacity-50' disabled={!nextPage}>
-            Next
+            Дараах
           </button>
         )}
         {nextPage && (
           <Link href={`/posts?page=${currentPage + 1}`}>
-            <button rel='next'>Next</button>
+            <button rel='next'>Дараах</button>
           </Link>
         )}
       </nav>
