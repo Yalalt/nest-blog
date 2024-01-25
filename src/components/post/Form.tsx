@@ -11,8 +11,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import Editor from '../common/Editor';
-import { Label } from '../ui/label';
+import Editor from '@/components/common/Editor';
+import { Label } from '@/components/ui/label';
 import Image from 'next/image';
 
 const formSchema = z.object({
@@ -58,8 +58,6 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
   }, [infoMessage]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     const finalValues = {
       ...values,
       publishedAt: values.published ? new Date() : null,
