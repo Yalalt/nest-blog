@@ -110,12 +110,12 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
 
     if (!file) return;
 
-    const formDate = new FormData();
-    formDate.append('file', file);
+    const formImage = new FormData();
+    formImage.append('file', file);
 
     fetch('/api/upload', {
       method: 'POST',
-      body: formDate,
+      body: formImage,
     }).then((res) => {
       res.json().then(({ url }) => {
         setCoverImage(url);

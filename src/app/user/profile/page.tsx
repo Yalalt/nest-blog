@@ -8,10 +8,6 @@ interface PageProps {}
 const Page: FunctionComponent<PageProps> = async () => {
   const session = await getServerSession(nextOptions);
 
-  if (!session) {
-    return <div>Нэвтрэх шаардлагатай</div>;
-  }
-
   return <Author user={session?.user} isEditable={true} />;
 };
 
