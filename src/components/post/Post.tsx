@@ -18,9 +18,9 @@ const Post: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
   return (
     <li key={id} className='py-12'>
       <article>
-        <div className='flex gap-6'>
+        <div className='flex flex-col gap-6 md:flex-row object-cover'>
           <div>
-            {coverImage && <Image src={coverImage} alt={title} width={200} height={200} />}
+            <div className='bg-emerald-400 w-96 md:w-52 object-fill'>{coverImage && <Image src={coverImage} alt={title} width={400} height={225} />}</div>
             <dl>
               <dt className='sr-only'>Нийтэлсэн огноо</dt>
               <dd className='text-base font-medium leading-6 text-gray-500 dark:text-gray-400'>
