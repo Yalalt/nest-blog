@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { deletePost, getPostById, updatePost } from '@/lib/prisma/posts';
-import { getServerSession } from 'next-auth';
-import { nextOptions } from '@/lib/auth';
 
 export async function PUT(request: NextRequest, { params: { id } }: { params: { id: string } }) {
   const post = await getPostById(id);
