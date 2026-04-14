@@ -1,10 +1,6 @@
-const removeImports = require('next-remove-imports')();
-
 /** @type {import('next').NextConfig} */
-const nextConfig = removeImports({
-  experimental: {
-    serverActions: true,
-  },
+const nextConfig = {
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -21,6 +17,6 @@ const nextConfig = removeImports({
       },
     ],
   },
-});
+};
 
 module.exports = nextConfig;
